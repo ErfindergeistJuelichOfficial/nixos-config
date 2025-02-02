@@ -11,7 +11,10 @@ in
 
   sops.defaultSopsFile = ./secrets.yaml;
   sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-  sops.secrets.foo = {};
+  sops.secrets."headscale/client-secret" = {
+    owner = config.users.users.headscale.name;
+    group = config.users.users.headscale.group;
+  };
 
   boot.loader.grub = {
     efiSupport = true;
@@ -60,6 +63,16 @@ in
       server_url = "https://headscale.erfindergeist.org:443";
       dns.base_domain = "tailnet.erfindergeist.org";
       policy.path = ./acl.jsonc;
+      oidc = {
+        issuer = "https://login.microsoftonline.com/194ff3aa-ddd4-4e8d-8173-6c4880b098db/v2.0";
+        client_id = "3f5dad2f-2cd6-4d29-80fa-71f5191f6a09";
+        client_secret_path = config.sops.secrets."headscale/client-secret".path;
+        scope =  ["openid" "profile" "email"];
+        extra_params = {
+          domain_hint = "erfindergeist.org";
+          prompt =  "select_account";
+        };
+      };
     };
   };
 
