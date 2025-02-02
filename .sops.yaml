@@ -1,0 +1,8 @@
+keys:
+  - &admin age19g0znk30e6m72w6vd6swjvj4ae8vzd5m97u0rxwcnh9x4u5eaupsdtedfx
+creation_rules:
+  - path_regex: hosts/headscale/secrets.yaml
+    key_groups:
+      - age:
+        - *admin
+        - age17d3q8ev45aehx96yl7p82xs8mfueneslguva9l7scl8qxctg4ymq2rt6gw

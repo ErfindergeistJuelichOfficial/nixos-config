@@ -1,4 +1,4 @@
-{ config, modulesPath, lib, pkgs, ... }:
+{ config, modulesPath, lib, pkgs,  ... }:
 let
   hostname = "headscale";
 in
@@ -8,6 +8,10 @@ in
     (modulesPath + "/profiles/qemu-guest.nix")
     ./disk-config.nix
   ];
+
+  sops.defaultSopsFile = ./secrets.yaml;
+  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+  sops.secrets.foo = {};
 
   boot.loader.grub = {
     efiSupport = true;
