@@ -1,0 +1,19 @@
+{
+  "tagOwners": {
+    "tag:server": [
+      "test"
+    ]
+  },
+  "acls": [
+    {
+      // default allow users access to own devices
+      "action": "accept",
+      "src": [
+        "test"
+      ],
+      "dst": [
+        "test:*"
+      ]
+    }
+  ]
+}

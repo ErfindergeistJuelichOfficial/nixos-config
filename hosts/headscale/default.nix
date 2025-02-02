@@ -55,6 +55,7 @@ in
     settings = {
       server_url = "https://headscale.erfindergeist.org:443";
       dns.base_domain = "tailnet.erfindergeist.org";
+      policy.path = ./acl.jsonc;
     };
   };
 
