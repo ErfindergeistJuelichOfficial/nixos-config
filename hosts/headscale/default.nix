@@ -33,6 +33,7 @@ in
 
   users.users.root.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ5bIn+kHUg9MKbmXVnCWOFCIAhbiKE1CrWMhdumcno9 rothe@pdemu1cml000301"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHbE7iYedoNFAx8PQyUuA5bPdNOVop1qI9RSMDcYy/11 tholmes@erfindergeist-03022025"
   ];
 
   services.caddy = {
