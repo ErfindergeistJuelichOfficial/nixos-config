@@ -88,6 +88,8 @@ in
     authorizedKeysInHomedir = false;
   };
 
+  services.tailscale.enable = true;
+
   # Special config for launching the VM variant
   virtualisation.vmVariant = {
     virtualisation = {
