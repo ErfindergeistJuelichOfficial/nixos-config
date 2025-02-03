@@ -1,18 +1,67 @@
 {
+  "groups": {
+    "group:admins": [
+      "Johannes.Rothe@erfindergeist.org",
+      "Lars.Eschweiler@erfindergeist.org",
+      "Tobias.Holmes@erfindergeist.org"
+    ],
+    "group:mitglieder": []
+  },
   "tagOwners": {
-    "tag:server": [
-      "test"
+    "tag:werkstatt": [
+      "werkstatt@erfindergeist.org"
     ]
   },
   "acls": [
     {
-      // default allow users access to own devices
       "action": "accept",
       "src": [
-        "test"
+        "group:admins"
       ],
       "dst": [
-        "test:*"
+        "tag:werkstatt:*"
+      ]
+    },
+    {
+      "action": "accept",
+      "src": [
+        "Tobias.Holmes@erfindergeist.org"
+      ],
+      "dst": [
+        "Tobias.Holmes@erfindergeist.org:*"
+      ]
+    },
+    {
+      "action": "accept",
+      "src": [
+        "Johannes.Rothe@erfindergeist.org"
+      ],
+      "dst": [
+        "Johannes.Rothe@erfindergeist.org:*"
+      ]
+    },
+    {
+      "action": "accept",
+      "src": [
+        "Lars.Eschweiler@erfindergeist.org"
+      ],
+      "dst": [
+        "Lars.Eschweiler@erfindergeist.org:*"
+      ]
+    }
+  ],
+  "ssh": [
+    {
+      "action": "accept",
+      "src": [
+        "group:admins"
+      ],
+      "dst": [
+        "tag:werkstatt"
+      ],
+      "users": [
+        "root",
+        "egj"
       ]
     }
   ]
