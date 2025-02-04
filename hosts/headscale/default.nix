@@ -31,11 +31,6 @@ in
 
   networking.hostName = hostname;
 
-  users.users.root.openssh.authorizedKeys.keys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ5bIn+kHUg9MKbmXVnCWOFCIAhbiKE1CrWMhdumcno9 rothe@pdemu1cml000301"
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHbE7iYedoNFAx8PQyUuA5bPdNOVop1qI9RSMDcYy/11 tholmes@erfindergeist-03022025"
-  ];
-
   services.caddy = {
     enable = true;
     email = lib.strings.concatStrings [ "kontakt" "@" "erfindergeist.org" ];
@@ -55,6 +50,7 @@ in
       hostname = hostname;
     };
   };
+
   services.fail2ban.enable = true;
 
   services.headscale = {
@@ -75,17 +71,6 @@ in
         };
       };
     };
-  };
-
-  services.openssh = {
-    enable = true;
-    openFirewall = true;
-    settings = {
-      PermitRootLogin = "prohibit-password";
-      PasswordAuthentication = false;
-      KbdInteractiveAuthentication = false;
-    };
-    authorizedKeysInHomedir = false;
   };
 
   services.tailscale.enable = true;
