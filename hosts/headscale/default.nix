@@ -21,6 +21,12 @@ in
     efiInstallAsRemovable = true;
   };
 
+  documentation = {
+    man.enable = false;
+    nixos.enable = false;
+    dev.enable = false;
+  };
+
   # do not use DHCP, as dashserv provisions IPs using cloud-init (see service below)
   networking.useDHCP = pkgs.lib.mkForce false;
   networking.firewall = {
