@@ -19,6 +19,13 @@
           ./hosts/headscale
         ];
       };
+      werkstatt-prodesk = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          sops-nix.nixosModules.sops
+          ./hosts/werkstatt-prodesk
+        ];
+      };
     };
 
     packages.x86_64-linux.default = self.nixosConfigurations.headscale.config.system.build.vm;
