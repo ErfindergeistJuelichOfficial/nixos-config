@@ -27,6 +27,16 @@ in
     dev.enable = false;
   };
 
+  system.autoUpgrade = {
+    enable = true;
+    flake = "github:ErfindergeistJuelichOfficial/nixos-config#headscale";
+    flags = [
+      "--no-write-lock-file"
+    ];
+    allowReboot = true;
+    dates = "daily";
+  };
+
   # do not use DHCP, as dashserv provisions IPs using cloud-init (see service below)
   networking.useDHCP = pkgs.lib.mkForce false;
   networking.firewall = {
