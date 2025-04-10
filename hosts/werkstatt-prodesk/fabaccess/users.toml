@@ -1,0 +1,173 @@
+[Admin1]
+roles = ["Admin"]
+passwd = "secret"
+noot = "noot!"
+cardkey = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+
+[Admin2]
+roles = ["Admin"]
+passwd = "secret"
+noot = "noot!"
+cardkey = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+
+[ManagerA1]
+roles = ["ManageA", "UseA", "ReadA", "DiscloseA"]
+passwd = "secret"
+noot = "noot!"
+cardkey = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+
+[ManagerA2]
+roles = ["ManageA", "UseA", "ReadA", "DiscloseA"]
+passwd = "secret"
+noot = "noot!"
+cardkey = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+
+[ManagerB1]
+roles = ["ManageB", "UseB", "ReadB", "DiscloseB"]
+passwd = "secret"
+noot = "noot!"
+cardkey = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+
+[ManagerB2]
+roles = ["ManageB", "UseB", "ReadB", "DiscloseB"]
+passwd = "secret"
+noot = "noot!"
+cardkey = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+
+[ManagerC1]
+roles = ["ManageC", "UseC", "ReadC", "DiscloseC"]
+passwd = "secret"
+noot = "noot!"
+cardkey = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+
+[ManagerC2]
+roles = ["ManageC", "UseC", "ReadC", "DiscloseC"]
+passwd = "secret"
+noot = "noot!"
+cardkey = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+
+[ManagerABC1]
+roles = ["ManageA", "UseA", "ReadA", "DiscloseA", "ManageB", "UseB", "ReadB", "DiscloseB", "ManageC", "UseC", "ReadC", "DiscloseC"]
+passwd = "secret"
+noot = "noot!"
+cardkey = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+
+[ManagerABC2]
+roles = ["ManageA", "UseA", "ReadA", "DiscloseA", "ManageB", "UseB", "ReadB", "DiscloseB", "ManageC", "UseC", "ReadC", "DiscloseC"]
+passwd = "secret"
+noot = "noot!"
+cardkey = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+
+[MakerA1]
+roles = ["UseA", "ReadA", "DiscloseA"]
+passwd = "secret"
+noot = "noot!"
+cardkey = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+
+[MakerA2]
+roles = ["UseA", "ReadA", "DiscloseA"]
+passwd = "secret"
+noot = "noot!"
+cardkey = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+
+[MakerB1]
+roles = ["UseB", "ReadB", "DiscloseB"]
+passwd = "secret"
+noot = "noot!"
+cardkey = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+
+[MakerB2]
+roles = ["UseB", "ReadB", "DiscloseB"]
+passwd = "secret"
+noot = "noot!"
+cardkey = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+
+[MakerC1]
+roles = ["UseC", "ReadC", "DiscloseC"]
+passwd = "secret"
+noot = "noot!"
+cardkey = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+
+[MakerC2]
+roles = ["UseC", "ReadC", "DiscloseC"]
+passwd = "secret"
+noot = "noot!"
+cardkey = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+
+[MakerABC1]
+roles = ["UseA", "ReadA", "DiscloseA", "UseB", "ReadB", "DiscloseB", "UseC", "ReadC", "DiscloseC"]
+passwd = "secret"
+noot = "noot!"
+cardkey = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+
+[MakerABC2]
+roles = ["UseA", "ReadA", "DiscloseA", "UseB", "ReadB", "DiscloseB", "UseC", "ReadC", "DiscloseC"]
+passwd = "secret"
+noot = "noot!"
+cardkey = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+
+[GuestA1]
+roles = ["ReadA", "DiscloseA"]
+passwd = "secret"
+noot = "noot!"
+cardkey = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+
+[GuestA2]
+roles = ["ReadA", "DiscloseA"]
+passwd = "secret"
+noot = "noot!"
+cardkey = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+
+[GuestB1]
+roles = ["ReadB", "DiscloseB"]
+passwd = "secret"
+noot = "noot!"
+cardkey = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+
+[GuestB2]
+roles = ["ReadB", "DiscloseB"]
+passwd = "secret"
+noot = "noot!"
+cardkey = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+
+[GuestC1]
+roles = ["ReadC", "DiscloseC"]
+passwd = "secret"
+noot = "noot!"
+cardkey = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+
+[GuestC2]
+roles = ["ReadC", "DiscloseC"]
+passwd = "secret"
+noot = "noot!"
+cardkey = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+
+[GuestABC1]
+roles = ["ReadA", "DiscloseA", "ReadB", "DiscloseB", "ReadC", "DiscloseC"]
+passwd = "secret"
+noot = "noot!"
+cardkey = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+
+[GuestABC2]
+roles = ["ReadA", "DiscloseA", "ReadB", "DiscloseB", "ReadC", "DiscloseC"]
+passwd = "secret"
+noot = "noot!"
+cardkey = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+
+[MakerQRA]
+roles = ["UseA", "ReadA"]
+passwd = "secret"
+noot = "noot!"
+cardkey = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+
+[MakerQRB]
+roles = ["UseB", "ReadB"]
+passwd = "secret"
+noot = "noot!"
+cardkey = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+
+[MakerQRC]
+roles = ["UseC", "ReadC"]
+passwd = "secret"
+noot = "noot!"
+cardkey = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"

@@ -14,6 +14,9 @@
   systemd.network.enable = true;
   services.resolved.enable = true;
   systemd.services."systemd-networkd-wait-online".enable = lib.mkForce false;
+  systemd.tmpfiles.rules = [
+    "d /var/lib/bffh 755 root root -"
+  ];
 
   system.autoUpgrade = {
     enable = true;
@@ -27,6 +30,7 @@
 
   networking.nftables.enable = true;
   networking.firewall.trustedInterfaces = [ "tailscale0" "incusbr0" ];
+  networking.firewall.allowedTCPPorts = [ 1883 ];
 
   time.timeZone = "Europe/Berlin";
 
@@ -55,6 +59,17 @@
     extraGroups = [ "incus-admin" ];
   };
 
+  services.mosquitto = {
+    enable = true;
+    listeners = [{
+      acl = [ "pattern readwrite #" ];
+      # TODO setup user password
+      omitPasswordAuth = true;
+      settings.allow_anonymous = true;
+      port = 1883;
+    }];
+  };
+
   services.tailscale.enable = true;
 
   services.caddy = {
@@ -80,6 +95,40 @@
     htop
     vim
   ];
+
+  virtualisation.podman.enable = true;
+  virtualisation.oci-containers = {
+    backend = "podman";
+    containers = {
+      # systemctl status podman-fabaccess-bffh.service
+      fabaccess-bffh = {
+        image = "registry.gitlab.com/fabinfra/fabaccess/bffh:development";
+        ports = [ "59661:59661" ];
+        volumes = [
+          "${./fabaccess/bffh.dhall}:/etc/bffh/bffh.dhall"
+          "${./fabaccess/users.toml}:/etc/bffh/users.toml"
+          "${./fabaccess/snakeoil-key.pem}:/etc/bffh/snakeoil-key.pem"
+          "${./fabaccess/snakeoil-cert.pem}:/etc/bffh/snakeoil-cert.pem"
+          "/var/lib/bffh:/var/lib/bffh"
+        ];
+      };
+    };
+  };
+
+  # Special config for launching the VM variant
+  virtualisation.vmVariant = {
+    virtualisation = {
+      forwardPorts = [
+        {
+          from = "host";
+          host.port = 2222;
+          guest.port = 22;
+        }
+      ];
+      graphics = false;
+    };
+    services.getty.autologinUser = "root";
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
