@@ -28,7 +28,7 @@
   networking.nftables.enable = true;
   networking.firewall = {
     trustedInterfaces = [ "tailscale0" "incusbr0" ];
-    allowedTCPPorts = [ 8123 ];
+    allowedTCPPorts = [ 8123 22 ];
   };
 
   time.timeZone = "Europe/Berlin";
@@ -49,7 +49,13 @@
   };
 
   users.mutableUsers = false;
-  users.users.root.hashedPassword = "$6$AE1yIgu1pprXS5jC$0MzA4Qmnuqnz789IhsLw4QEaGc1CXiOp4W3tjpQhbhH96qp7ar8NjVSe22mucZCiAoUT/o4BSU3Zq6r9.l6Z20";
+  users.users.root = {
+    hashedPassword = "$6$AE1yIgu1pprXS5jC$0MzA4Qmnuqnz789IhsLw4QEaGc1CXiOp4W3tjpQhbhH96qp7ar8NjVSe22mucZCiAoUT/o4BSU3Zq6r9.l6Z20";
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINLg8qmYBZzk9inPEEAlacDj7v5uUdTEqcs1jc+J1fuJ rothe@lift"
+    ];
+  };
+
   users.users.erfindergeist = {
     isNormalUser = true;
     hashedPassword =
@@ -59,6 +65,17 @@
   };
 
   services.tailscale.enable = true;
+
+  services.openssh = {
+    enable = true;
+    ports = [ 22 ];
+    settings = {
+      PasswordAuthentication = true;
+      AllowUsers = null; # Allows all users by default.
+      X11Forwarding = false;
+      PermitRootLogin = "prohibit-password";
+    };
+  };
 
   services.caddy = {
     enable = true;
