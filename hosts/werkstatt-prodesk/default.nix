@@ -26,7 +26,10 @@
   };
 
   networking.nftables.enable = true;
-  networking.firewall.trustedInterfaces = [ "tailscale0" "incusbr0" ];
+  networking.firewall = {
+    trustedInterfaces = [ "tailscale0" "incusbr0" ];
+    allowedTCPPorts = [ 8123 ];
+  };
 
   time.timeZone = "Europe/Berlin";
 
