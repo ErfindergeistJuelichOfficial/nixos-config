@@ -42,6 +42,7 @@
     trustedInterfaces = [ "tailscale0" "incusbr0" ];
     allowedTCPPorts = [
       22   # SSH
+      5678 # n8n
       8123 # Home Assistant
     ];
     allowedUDPPorts = [
@@ -118,6 +119,21 @@
     htop
     vim
   ];
+
+  virtualisation.podman.enable = true;
+  virtualisation.oci-containers = {
+    backend = "podman";
+    containers = {
+      n8n = {
+        environment = {
+          N8N_SECURE_COOKIE = "false";
+        };
+        image = "ghcr.io/n8n-io/n8n:1.91.3";
+        ports = [ "5678:5678" ];
+        volumes = [ "n8n_data:/home/node/.n8n" ];
+      };
+    };
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
