@@ -13,7 +13,19 @@
   networking.hostName = "werkstatt-prodesk";
   systemd.network.enable = true;
   services.resolved.enable = true;
+  services.resolved.extraConfig = ''
+    MulticastDNS=resolve;
+  '';
   systemd.services."systemd-networkd-wait-online".enable = lib.mkForce false;
+
+  systemd.network.networks."10-lan" = {
+    matchConfig.Name = "enp1s0";
+    networkConfig.DHCP = "ipv4";
+    dhcpV4Config.UseDomains = true;
+    networkConfig = {
+      MulticastDNS = true;
+    };
+  };
 
   system.autoUpgrade = {
     enable = true;
@@ -28,7 +40,13 @@
   networking.nftables.enable = true;
   networking.firewall = {
     trustedInterfaces = [ "tailscale0" "incusbr0" ];
-    allowedTCPPorts = [ 8123 22 ];
+    allowedTCPPorts = [
+      22   # SSH
+      8123 # Home Assistant
+    ];
+    allowedUDPPorts = [
+      5353  # mDNS
+    ];
   };
 
   time.timeZone = "Europe/Berlin";
