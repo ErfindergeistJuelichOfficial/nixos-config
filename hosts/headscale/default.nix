@@ -75,6 +75,7 @@ in
     settings = {
       server_url = "https://headscale.erfindergeist.org:443";
       dns.base_domain = "tailnet.erfindergeist.org";
+      dns.override_local_dns = false;
       policy.path = ./acl.jsonc;
       oidc = {
         issuer = "https://login.microsoftonline.com/194ff3aa-ddd4-4e8d-8173-6c4880b098db/v2.0";
