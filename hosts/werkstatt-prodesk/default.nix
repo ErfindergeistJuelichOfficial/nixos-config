@@ -127,6 +127,7 @@
       n8n = {
         environment = {
           N8N_RUNNERS_ENABLED = "true";
+          N8N_EDITOR_BASE_URL = "https://n8n.erfindergeist.org";
         };
         image = "ghcr.io/n8n-io/n8n:1.103.2";
         ports = [ "5678:5678" ];
