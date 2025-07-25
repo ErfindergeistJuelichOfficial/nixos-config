@@ -126,9 +126,9 @@
     containers = {
       n8n = {
         environment = {
-          N8N_SECURE_COOKIE = "false";
+          N8N_RUNNERS_ENABLED = "true";
         };
-        image = "ghcr.io/n8n-io/n8n:1.91.3";
+        image = "ghcr.io/n8n-io/n8n:1.103.2";
         ports = [ "5678:5678" ];
         volumes = [ "n8n_data:/home/node/.n8n" ];
       };

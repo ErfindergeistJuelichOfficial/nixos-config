@@ -48,6 +48,17 @@
       "dst": [
         "Lars.Eschweiler@erfindergeist.org:*"
       ]
+    },
+    {
+      "action": "accept",
+      "src": [
+        "werkstatt@erfindergeist.org",
+        "tag:werkstatt"
+      ],
+      "dst": [
+        "werkstatt@erfindergeist.org:*",
+        "tag:werkstatt:*"
+      ]
     }
   ],
   "ssh": [
