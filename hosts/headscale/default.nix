@@ -39,6 +39,7 @@ in
 
   # do not use DHCP, as dashserv provisions IPs using cloud-init (see service below)
   networking.useDHCP = pkgs.lib.mkForce false;
+  networking.nftables.enable = true;
   networking.firewall = {
     enable = true;
     allowedTCPPorts = [ 80 443 ];
@@ -54,6 +55,11 @@ in
       "headscale.erfindergeist.org" = {
         extraConfig = ''
           reverse_proxy localhost:${builtins.toString config.services.headscale.port}
+        '';
+      };
+      "n8n.erfindergeist.org" = {
+        extraConfig = ''
+          reverse_proxy 192.168.100.11:8000
         '';
       };
     };
@@ -91,6 +97,47 @@ in
   };
 
   services.tailscale.enable = true;
+
+  networking.nat = {
+    enable = true;
+    internalInterfaces = [ "ve-*" ];
+    externalInterface = "eth0";
+  };
+
+  containers.headscale-caddy = {
+    autoStart = true;
+    privateNetwork = true;
+    enableTun = true; # necessary for tailscale
+    hostAddress = "192.168.100.10";
+    localAddress = "192.168.100.11";
+    config = { ... }: {
+      networking = {
+        useHostResolvConf = lib.mkForce false;
+        nftables.enable = true;
+        firewall = {
+          enable = true;
+          allowedTCPPorts = [
+            8000
+          ];
+        };
+      };
+      services.resolved.enable = true;
+
+      services.tailscale.enable = true;
+      services.caddy = {
+        enable = true;
+        virtualHosts = {
+          ":8000" = {
+            extraConfig = ''
+              reverse_proxy werkstatt-prodesk:5678
+            '';
+          };
+        };
+      };
+
+      system.stateVersion = "25.11";
+    };
+  };
 
   # Special config for launching the VM variant
   virtualisation.vmVariant = {
