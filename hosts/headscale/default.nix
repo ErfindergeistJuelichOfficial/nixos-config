@@ -62,6 +62,11 @@ in
           reverse_proxy 192.168.100.11:8000
         '';
       };
+      "auth.erfindergeist.org" = {
+        extraConfig = ''
+          reverse_proxy 192.168.100.11:8001
+        '';
+      };
     };
   };
 
@@ -118,6 +123,7 @@ in
           enable = true;
           allowedTCPPorts = [
             8000
+            8001
           ];
         };
       };
@@ -130,6 +136,15 @@ in
           ":8000" = {
             extraConfig = ''
               reverse_proxy werkstatt-prodesk:5678
+            '';
+          };
+          ":8001" = {
+            extraConfig = ''
+              reverse_proxy https://werkstatt-prodesk:8444 {
+                transport "http" {
+                  tls_insecure_skip_verify
+                }
+              }
             '';
           };
         };

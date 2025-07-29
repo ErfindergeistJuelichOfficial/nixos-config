@@ -42,7 +42,6 @@
     trustedInterfaces = [ "tailscale0" "incusbr0" ];
     allowedTCPPorts = [
       22   # SSH
-      5678 # n8n
       8123 # Home Assistant
     ];
     allowedUDPPorts = [
@@ -89,7 +88,7 @@
     enable = true;
     ports = [ 22 ];
     settings = {
-      PasswordAuthentication = true;
+      PasswordAuthentication = false;
       AllowUsers = null; # Allows all users by default.
       X11Forwarding = false;
       PermitRootLogin = "prohibit-password";
@@ -110,6 +109,27 @@
   };
 
   services.apcupsd.enable = true;
+
+  services.kanidm = {
+    #enableClient = true;
+    enableServer = true;
+    package = pkgs.kanidm_1_6;
+    #clientSettings.uri = "https://127.0.0.1:8444";
+    serverSettings = {
+      domain = "auth.erfindergeist.org";
+      origin = "https://auth.erfindergeist.org";
+      bindaddress = "0.0.0.0:8444";
+      ldapbindaddress = "127.0.0.1:3636";
+      # https://kanidm.github.io/kanidm/stable/evaluation_quickstart.html#generate-evaluation-certificates
+      tls_key = "/etc/kanidm/key.pem";
+      tls_chain = "/etc/kanidm/chain.pem";
+      online_backup = {
+        path = "/var/lib/kanidm/backups";
+        schedule = "00 22 * * *";
+        versions = 7;
+      };
+    };
+  };
 
   virtualisation.incus = {
     enable = true;
