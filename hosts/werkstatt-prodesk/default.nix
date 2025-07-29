@@ -109,6 +109,8 @@
     };
   };
 
+  services.apcupsd.enable = true;
+
   virtualisation.incus = {
     enable = true;
     ui.enable = true;
