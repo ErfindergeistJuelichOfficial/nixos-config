@@ -111,6 +111,24 @@
 
   services.apcupsd.enable = true;
 
+  services.kanidm = {
+    enableServer = true;
+    package = pkgs.kanidm_1_6;
+    serverSettings = {
+      domain = "auth.erfindergeist.org";
+      origin = "https://auth.erfindergeist.org";
+      bindaddress = "127.0.0.1:8444";
+      ldapbindaddress = "127.0.0.1:3636";
+      tls_key = "/etc/kanidm/key.pem";
+      tls_chain = "/etc/kanidm/chain.pem";
+      online_backup = {
+        path = "/var/lib/kanidm/backups";
+        schedule = "00 22 * * *";
+        versions = 7;
+      };
+    };
+  };
+
   virtualisation.incus = {
     enable = true;
     ui.enable = true;
