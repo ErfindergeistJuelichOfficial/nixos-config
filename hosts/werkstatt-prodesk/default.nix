@@ -44,6 +44,7 @@
       22   # SSH
       5678 # n8n
       8123 # Home Assistant
+      8444 # kanidm
     ];
     allowedUDPPorts = [
       5353  # mDNS
@@ -112,15 +113,17 @@
   services.apcupsd.enable = true;
 
   services.kanidm = {
+    enableClient = true;
     enableServer = true;
     package = pkgs.kanidm_1_6;
+    clientSettings.uri = "https://127.0.0.1:8444";
     serverSettings = {
       domain = "auth.erfindergeist.org";
       origin = "https://auth.erfindergeist.org";
-      bindaddress = "127.0.0.1:8444";
+      bindaddress = "0.0.0.0:8444";
       ldapbindaddress = "127.0.0.1:3636";
-      tls_key = "/etc/kanidm/key.pem";
-      tls_chain = "/etc/kanidm/chain.pem";
+      tls_key = "/etc/kanidm/key.pem";  # TODO via sops
+      tls_chain = "/etc/kanidm/chain.pem";  # TODO via sops
       online_backup = {
         path = "/var/lib/kanidm/backups";
         schedule = "00 22 * * *";
