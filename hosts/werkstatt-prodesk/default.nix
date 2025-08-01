@@ -10,6 +10,9 @@
     "net.ipv4.conf.all.forwarding" = "1";
   };
 
+  sops.defaultSopsFile = ./secrets.yaml;
+  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+
   networking.hostName = "werkstatt-prodesk";
   systemd.network.enable = true;
   services.resolved.enable = true;
@@ -129,6 +132,51 @@
         versions = 7;
       };
     };
+  };
+
+  sops.secrets."vikunja/clientsecret" = {};
+  sops.templates."vikunja.yaml".content = ''
+    auth:
+      local:
+        enabled: false
+      openid:
+        enabled: true
+        providers:
+        - authurl: https://auth.erfindergeist.org/oauth2/openid/vikunja
+          clientid: vikunja
+          clientsecret: ${config.sops.placeholder."vikunja/clientsecret"}
+          name: kandidm
+          scope: openid profile email
+    database:
+      database: vikunja
+      host: localhost
+      path: /var/lib/vikunja/vikunja.db
+      type: sqlite
+      user: vikunja
+    files:
+      basepath: /var/lib/vikunja/files
+    service:
+      frontendurl: https://tasks.erfindergeist.org/
+      interface: :3456
+  '';
+  users.users.vikunja = {
+    group = "vikunja";
+    isSystemUser = true;
+  };
+  users.groups.vikunja = {};
+  environment.etc."vikunja/config.yaml".source = lib.mkForce config.sops.templates."vikunja.yaml".path;
+  sops.templates."vikunja.yaml".owner = "vikunja";
+
+  systemd.services.vikunja.serviceConfig = {
+    User = "vikunja";
+    Group = "vikunja";
+    DynamicUser = lib.mkForce false;
+  };
+
+  services.vikunja = {
+    enable = true;
+    frontendHostname = "tasks.erfindergeist.org";
+    frontendScheme = "https";
   };
 
   virtualisation.incus = {

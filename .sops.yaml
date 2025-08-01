@@ -6,3 +6,8 @@ creation_rules:
       - age:
         - *admin
         - age1mqswtt2mtlzspkdn86w6w0nv3sj3f3u8cpgpzv84dt5jt65nh57sq8nr9s
+  - path_regex: hosts/werkstatt-prodesk/secrets.yaml
+    key_groups:
+      - age:
+        - *admin
+        - age1klzgkrj7ra3h5lwdpay3kdpcgz0dl6jm7wc2fswy5grhra6r944s2atk04
