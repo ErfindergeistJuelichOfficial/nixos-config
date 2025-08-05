@@ -179,6 +179,32 @@
     frontendScheme = "https";
   };
 
+
+  sops.secrets."hedgedoc/clientsecret" = {};
+  sops.secrets."hedgedoc/sessionsecret" = {};
+  sops.templates."hedgedoc.env".content = ''
+  CLIENT_SECRET=${config.sops.placeholder."hedgedoc/clientsecret"}
+  SESSION_SECRET=${config.sops.placeholder."hedgedoc/sessionsecret"}
+  '';
+  services.hedgedoc = {
+    enable = true;
+    environmentFile = config.sops.templates."hedgedoc.env".path;
+    settings = {
+      domain = "pad.erfindergeist.org";
+      port = 2345;
+      protocolUseSSL = true;
+      sessionSecret = "$SESSION_SECRET";
+      oauth2 = {
+        clientID = "hedgedoc";
+        clientSecret = "$CLIENT_SECRET";
+        authorizationURL = "https://auth.erfindergeist.org/oauth2/openid/hedgedoc";
+        tokenURL = "https://auth.erfindergeist.org/oauth2/token";
+        scope = "openid email profile";
+        providerName = "Erfindergeist SSO";
+      };
+    };
+  };
+
   virtualisation.incus = {
     enable = true;
     ui.enable = true;
