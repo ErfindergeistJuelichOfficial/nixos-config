@@ -134,7 +134,9 @@
     };
   };
 
-  sops.secrets."vikunja/clientsecret" = {};
+  sops.secrets."vikunja/clientsecret" = {
+    restartUnits = [ "vikunja.service" ];
+  };
   sops.templates."vikunja.yaml".content = ''
     auth:
       local:
@@ -145,7 +147,7 @@
         - authurl: https://auth.erfindergeist.org/oauth2/openid/vikunja
           clientid: vikunja
           clientsecret: ${config.sops.placeholder."vikunja/clientsecret"}
-          name: kandidm
+          name: kanidm
           scope: openid profile email
     database:
       database: vikunja
@@ -180,27 +182,59 @@
   };
 
 
-  sops.secrets."hedgedoc/clientsecret" = {};
-  sops.secrets."hedgedoc/sessionsecret" = {};
+  sops.secrets."hedgedoc/clientsecret" = {
+    restartUnits = [ "hedgedoc.service" ];
+  };
+  sops.secrets."hedgedoc/sessionsecret" = {
+    restartUnits = [ "hedgedoc.service" ];
+  };
   sops.templates."hedgedoc.env".content = ''
   CLIENT_SECRET=${config.sops.placeholder."hedgedoc/clientsecret"}
   SESSION_SECRET=${config.sops.placeholder."hedgedoc/sessionsecret"}
   '';
-  services.hedgedoc = {
+  services.hedgedoc =
+  let
+    authURL = config.services.kanidm.serverSettings.origin;
+    domain = "pad.erfindergeist.org";
+    port = 2345;
+  in
+  {
     enable = true;
     environmentFile = config.sops.templates."hedgedoc.env".path;
     settings = {
-      domain = "pad.erfindergeist.org";
-      port = 2345;
+      #allowAnonymous = false;
+      #allowEmailRegister = false;
+      #allowFreeURL = false;
+      #email = false;
+
+      allowOrigin = [
+        domain
+        "headscale-caddy"
+        "100.64.0.14"
+      ];
+      domain = domain;
+      host = "100.64.0.12";
+      hsts.enable = false;
+      port = port;
       protocolUseSSL = true;
       sessionSecret = "$SESSION_SECRET";
+      useSSL = false;
+      urlAddPort = false;
+
       oauth2 = {
+        authorizationURL = "${authURL}/ui/oauth2";
+        baseURL = "${authURL}/oauth2";
+        tokenURL = "${authURL}/oauth2/token";
+        userProfileURL = "${authURL}/oauth2/openid/hedgedoc/userinfo";
+
         clientID = "hedgedoc";
         clientSecret = "$CLIENT_SECRET";
-        authorizationURL = "https://auth.erfindergeist.org/oauth2/openid/hedgedoc";
-        tokenURL = "https://auth.erfindergeist.org/oauth2/token";
-        scope = "openid email profile";
         providerName = "Erfindergeist SSO";
+        scope = "openid email profile";
+        userProfileDisplayNameAttr = "displayname";
+        userProfileEmailAttr = "email";
+        userProfileUsernameAttr = "preferred_username";
+        userProfileIDAttr = "sub";
       };
     };
   };

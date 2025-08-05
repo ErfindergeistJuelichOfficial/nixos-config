@@ -72,6 +72,13 @@ in
           reverse_proxy 192.168.100.11:8002
         '';
       };
+      "pad.erfindergeist.org" = {
+        extraConfig = ''
+          reverse_proxy 192.168.100.11:8003 {
+            header_up X-Forwarded-Proto {scheme}
+          }
+        '';
+      };
     };
   };
 
@@ -130,6 +137,7 @@ in
             8000
             8001
             8002
+            8003
           ];
         };
       };
@@ -157,6 +165,14 @@ in
           ":8002" = {
             extraConfig = ''
               reverse_proxy http://werkstatt-prodesk:3456 {
+              }
+            '';
+          };
+          # hedgedoc
+          ":8003" = {
+            extraConfig = ''
+              reverse_proxy http://werkstatt-prodesk:2345 {
+                 header_up X-Forwarded-Proto {scheme}
               }
             '';
           };
