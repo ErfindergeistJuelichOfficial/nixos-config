@@ -26,9 +26,16 @@
           ./hosts/werkstatt-prodesk
         ];
       };
+      werkstatt-workstation = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./hosts/werkstatt-workstation
+        ];
+      };
     };
 
     packages.x86_64-linux.default = self.nixosConfigurations.headscale.config.system.build.vm;
     packages.x86_64-linux.werkstatt-prodesk = self.nixosConfigurations.werkstatt-prodesk.config.system.build.vm;
+    packages.x86_64-linux.werkstatt-workstation = self.nixosConfigurations.werkstatt-workstation.config.system.build.vm;
   };
 }
