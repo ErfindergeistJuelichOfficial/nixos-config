@@ -29,5 +29,6 @@
     };
 
     packages.x86_64-linux.default = self.nixosConfigurations.headscale.config.system.build.vm;
+    packages.x86_64-linux.werkstatt-prodesk = self.nixosConfigurations.werkstatt-prodesk.config.system.build.vm;
   };
 }

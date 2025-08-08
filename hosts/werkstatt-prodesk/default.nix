@@ -206,6 +206,21 @@
     };
   };
 
+  # Special config for launching the VM variant
+  virtualisation.vmVariant = {
+    virtualisation = {
+      forwardPorts = [
+        {
+          from = "host";
+          host.port = 2222;
+          guest.port = 22;
+        }
+      ];
+      graphics = false;
+    };
+    services.getty.autologinUser = "root";
+  };
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
