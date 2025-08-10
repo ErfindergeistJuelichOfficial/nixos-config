@@ -3,16 +3,39 @@
 {
   imports = [ ./hardware-configuration.nix ];
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot = {
+    initrd.systemd.enable = true;
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
+    plymouth = {
+      enable = true;
+      logo = pkgs.fetchurl {
+        url = "https://wiki.erfindergeist.org/images/ci/Logo-02.png";
+        sha256 = "sha256-XIsIYQTqgsSbETpYtQprNFllDQEx+wZ0NSppZVkloZI=";
+      };
+    };
+    consoleLogLevel = 3;
+      initrd.verbose = false;
+      kernelParams = [
+        "quiet"
+        "splash"
+        "boot.shell_on_fail"
+        "udev.log_priority=3"
+        "rd.systemd.show_status=auto"
+      ];
+      # Hide the OS choice for bootloaders.
+      # It's still possible to open the bootloader list by pressing any key
+      # It will just not appear on screen unless a key is pressed
+      loader.timeout = 0;
+  };
 
-  #sops.defaultSopsFile = ./secrets.yaml;
-  #sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
-  #services = {
-  #  displayManager.gdm.enable = true;
-  #  desktopManager.gnome.enable = true;
-  #};
+  services = {
+    displayManager.gdm.enable = true;
+    desktopManager.gnome.enable = true;
+  };
 
 
   networking.hostName = "werkstatt-workstation";
@@ -76,12 +99,17 @@
   services.tailscale.enable = true;
 
   services.kanidm = {
+    package = pkgs.kanidm_1_7;
     enableClient = true;
-    package = pkgs.kanidm_1_6;
     clientSettings.uri = "https://auth.erfindergeist.org";
+    enablePam = true;
+    unixSettings = {
+      pam_allowed_login_groups = [ config.networking.hostName ];
+    };
   };
 
   environment.systemPackages = with pkgs; [
+    bash
     curl
     htop
     vim
@@ -90,6 +118,7 @@
   # Special config for launching the VM variant
   virtualisation.vmVariant = {
     virtualisation = {
+      qemu.guestAgent.enable = true;
       forwardPorts = [
         {
           from = "host";
