@@ -67,7 +67,6 @@
 
   networking.nftables.enable = true;
   networking.firewall = {
-    trustedInterfaces = [ "tailscale0" ];
     allowedUDPPorts = [
       5353  # mDNS
     ];
@@ -111,7 +110,17 @@
   environment.systemPackages = with pkgs; [
     bash
     curl
+    eog
+    evince
+    firefox
+    gedit
+    gimp
     htop
+    inkscape
+    libreoffice
+    orca-slicer
+    prusa-slicer
+    totem
     vim
   ];
 
