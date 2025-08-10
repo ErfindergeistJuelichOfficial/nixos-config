@@ -8,8 +8,5 @@
     "schedule": [
       "every 4 weeks on sunday before 9am"
     ]
-  },
-  "nix": {
-    "enabled": true
   }
 }
