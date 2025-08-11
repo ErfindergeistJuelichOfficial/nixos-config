@@ -179,6 +179,34 @@
     frontendScheme = "https";
   };
 
+  sops.secrets."outline/clientsecret" = {
+    restartUnits = [ "outline.service" ];
+    owner = config.services.outline.user;
+  };
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) ["outline"];
+  services.outline = let
+    authUrl = config.services.kanidm.serverSettings.origin;
+  in {
+    enable = true;
+    defaultLanguage = "de_DE";
+    forceHttps = false;
+    port = 3000;
+    publicUrl = "https://docs.erfindergeist.org";
+    storage = {
+      storageType = "local";
+    };
+    oidcAuthentication = {
+      authUrl = "${authUrl}/ui/oauth2";
+      clientId = "outline";
+      clientSecretFile = config.sops.secrets."outline/clientsecret".path;
+      displayName = "Erfindergeist SSO";
+      scopes = [ "openid" "profile" "email" ];
+      tokenUrl = "${authUrl}/oauth2/token";
+      userinfoUrl = "${authUrl}/oauth2/openid/outline/userinfo";
+      usernameClaim = "preferred_username";
+    };
+  };
+
   virtualisation.incus = {
     enable = true;
     ui.enable = true;

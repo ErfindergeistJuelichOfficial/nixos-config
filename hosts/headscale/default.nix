@@ -72,6 +72,11 @@ in
           reverse_proxy 192.168.100.11:8002
         '';
       };
+      "docs.erfindergeist.org" = {
+        extraConfig = ''
+          reverse_proxy 192.168.100.11:8003
+        '';
+      };
     };
   };
 
@@ -130,6 +135,7 @@ in
             8000
             8001
             8002
+            8003
           ];
         };
       };
@@ -157,6 +163,13 @@ in
           ":8002" = {
             extraConfig = ''
               reverse_proxy http://werkstatt-prodesk:3456 {
+              }
+            '';
+          };
+          # outline
+          ":8003" = {
+            extraConfig = ''
+              reverse_proxy http://werkstatt-prodesk:3000 {
               }
             '';
           };
