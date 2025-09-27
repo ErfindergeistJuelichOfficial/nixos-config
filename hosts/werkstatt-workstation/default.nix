@@ -6,7 +6,7 @@
   boot = {
     loader.grub.enable = true;
     loader.grub.device = "/dev/sda";
-    
+
     plymouth = {
       enable = true;
       theme = "circle";
@@ -101,7 +101,7 @@
     isNormalUser = true;
     group = "erfindergeist";
     description = "Erfindergeist";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "podman" ];
     hashedPassword = "$y$j9T$dO7c2cphx1q5oDw.bIcLP1$kcon910nDQMQWjcPT3tFPgmPIsmlT6HrqSde8S71UG6";
   };
   users.groups.erfindergeist = {};
@@ -145,6 +145,19 @@
     totem
     vim
   ];
+
+  programs.vscode.enable = true;
+
+  virtualisation = {
+    containers.enable = true;
+    podman = {
+      enable = true;
+      # Create a `docker` alias for podman, to use it as a drop-in replacement
+      dockerCompat = true;
+      # Required for containers under podman-compose to be able to talk to each other.
+      defaultNetwork.settings.dns_enabled = true;
+    };
+  };
 
   # Special config for launching the VM variant
   virtualisation.vmVariant = {
