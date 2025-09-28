@@ -146,6 +146,10 @@
     vim
   ];
 
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+    "vscode-with-extensions"
+    "vscode"
+  ];
   programs.vscode.enable = true;
 
   virtualisation = {
