@@ -36,8 +36,20 @@
   };
 
 
-  networking.hostName = "werkstatt-workstation";
-  systemd.network.enable = true;
+  networking = {
+    hostName = "werkstatt-workstation";
+    interfaces."enp12s0".wakeOnLan.enable = true;
+  };
+  systemd = {
+    network.enable = true;
+    targets = {
+      sleep.enable = false;
+      suspend.enable = false;
+      hibernate.enable = false;
+      hybrid-sleep.enable = false;
+    };
+  };
+
   services.resolved.enable = true;
   services.resolved.extraConfig = ''
     MulticastDNS=resolve;
@@ -67,6 +79,9 @@
   networking.firewall = {
     allowedUDPPorts = [
       5353  # mDNS
+    ];
+    trustedInterfaces = [
+      "tailscale0"
     ];
   };
 
@@ -105,11 +120,6 @@
     hashedPassword = "$y$j9T$dO7c2cphx1q5oDw.bIcLP1$kcon910nDQMQWjcPT3tFPgmPIsmlT6HrqSde8S71UG6";
   };
   users.groups.erfindergeist = {};
-  services.displayManager.autoLogin.enable = true;
-  services.displayManager.autoLogin.user = "erfindergeist";
-  # Workaround for GNOME autologin: https://github.com/NixOS/nixpkgs/issues/103746#issuecomment-945091229
-  systemd.services."getty@tty1".enable = false;
-  systemd.services."autovt@tty1".enable = false;
 
   users.users.root = {
     hashedPassword = "$y$j9T$dO7c2cphx1q5oDw.bIcLP1$kcon910nDQMQWjcPT3tFPgmPIsmlT6HrqSde8S71UG6";
@@ -126,6 +136,15 @@
   #    pam_allowed_login_groups = [ config.networking.hostName ];
   #  };
   #};
+
+  # Remote desktop
+  services = {
+    xrdp = {
+      enable = true;
+      defaultWindowManager = "${pkgs.gnome-session}/bin/gnome-session";
+    };
+    gnome.gnome-remote-desktop.enable = true;
+  };
 
   environment.systemPackages = with pkgs; [
     bash
