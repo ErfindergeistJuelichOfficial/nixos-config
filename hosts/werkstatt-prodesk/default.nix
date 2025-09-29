@@ -231,6 +231,21 @@
         ports = [ "5678:5678" ];
         volumes = [ "n8n_data:/home/node/.n8n" ];
       };
+      homebox =  {
+        image = "ghcr.io/sysadminsmedia/homebox:latest";
+        ports = [ "3100:7745" ];
+        volumes = [ "homebox_data:/data" ];
+        environment = {
+          HBOX_LOG_LEVEL = "info";
+          HBOX_LOG_FORMAT = "text";
+          HBOX_WEB_MAX_FILE_UPLOAD = "10";
+          # HBOX_MAILER_PORT= 
+          # HBOX_MAILER_USERNAME=
+          # HBOX_MAILER_PASSWORD=
+          # HBOX_MAILER_FROM=
+          HBOX_OPTIONS_ALLOW_REGISTRATION = "false";
+        };
+      }
     };
   };
 
