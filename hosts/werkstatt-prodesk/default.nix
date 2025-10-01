@@ -207,6 +207,33 @@
     };
   };
 
+  sops.secrets."gotosocial/clientsecret" = {};
+  sops.templates."gotosocialSecret".content = ''
+    GTS_OIDC_CLIENT_SECRET=${config.sops.placeholder."gotosocial/clientsecret"}
+  '';
+  services.gotosocial = {
+    enable = true;
+    environmentFile = config.sops.templates."gotosocialSecret".path;
+    # Workaround for go 1.25 in unstable not being propagated yet
+    package = pkgs.gotosocial.override {
+      buildGoModule = pkgs.buildGo124Module;
+    };
+    setupPostgresqlDB = true;
+    settings = {
+      application-name = "Erfindergeist Social";
+      host = "social.erfindergeist.org";
+      port = 8080;
+      bind-address = "0.0.0.0";
+      trusted-proxies = [
+        "100.64.0.0/24"
+      ];
+      oidc-enabled = true;
+      oidc-idp-name = "kandidm";
+      oidc-issuer = "https://auth.erfindergeist.org/oauth2/openid/gotosocial";
+      oidc-client-id = "gotosocial";
+    };
+  };
+
   virtualisation.incus = {
     enable = true;
     ui.enable = true;

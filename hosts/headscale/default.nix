@@ -77,6 +77,11 @@ in
           reverse_proxy 192.168.100.11:8003
         '';
       };
+      "social.erfindergeist.org" = {
+        extraConfig = ''
+          reverse_proxy 192.168.100.11:8004
+        '';
+      };
     };
   };
 
@@ -136,6 +141,7 @@ in
             8001
             8002
             8003
+            8004
           ];
         };
       };
@@ -162,15 +168,19 @@ in
           # vikunja
           ":8002" = {
             extraConfig = ''
-              reverse_proxy http://werkstatt-prodesk:3456 {
-              }
+              reverse_proxy http://werkstatt-prodesk:3456
             '';
           };
           # outline
           ":8003" = {
             extraConfig = ''
-              reverse_proxy http://werkstatt-prodesk:3000 {
-              }
+              reverse_proxy http://werkstatt-prodesk:3000
+            '';
+          };
+          # gotosocial
+          ":8004" = {
+            extraConfig = ''
+              reverse_proxy http://werkstatt-prodesk:8080
             '';
           };
         };
