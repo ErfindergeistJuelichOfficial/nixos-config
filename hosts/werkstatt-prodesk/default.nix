@@ -5,10 +5,6 @@
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernel.sysctl = {
-    # Necessary for incus to masquerade properly
-    "net.ipv4.conf.all.forwarding" = "1";
-  };
 
   sops.defaultSopsFile = ./secrets.yaml;
   sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
@@ -42,10 +38,9 @@
 
   networking.nftables.enable = true;
   networking.firewall = {
-    trustedInterfaces = [ "tailscale0" "incusbr0" ];
+    trustedInterfaces = [ "tailscale0"];
     allowedTCPPorts = [
       22   # SSH
-      8123 # Home Assistant
     ];
     allowedUDPPorts = [
       5353  # mDNS
@@ -82,7 +77,6 @@
     hashedPassword =
       "$6$bfECpU8Vvxqk05ar$96z1Zaj7dtrCzuA1RMT7JRFXvq79WzS.Hfr9xqhrcxM2kvp.gy1jWunqEhsng6P4XH1gOr.3i7.A72f7gbXel/";
     description = "erfindergeist";
-    extraGroups = [ "incus-admin" ];
   };
 
   services.tailscale.enable = true;
@@ -234,11 +228,6 @@
     };
   };
 
-  virtualisation.incus = {
-    enable = true;
-    ui.enable = true;
-  };
-
   environment.systemPackages = with pkgs; [
     curl
     htop
@@ -248,17 +237,7 @@
   virtualisation.podman.enable = true;
   virtualisation.oci-containers = {
     backend = "podman";
-    containers = {
-      n8n = {
-        environment = {
-          N8N_RUNNERS_ENABLED = "true";
-          N8N_EDITOR_BASE_URL = "https://n8n.erfindergeist.org";
-        };
-        image = "ghcr.io/n8n-io/n8n:1.103.2";
-        ports = [ "5678:5678" ];
-        volumes = [ "n8n_data:/home/node/.n8n" ];
-      };
-    };
+    containers = { };
   };
 
   # Special config for launching the VM variant
