@@ -208,10 +208,6 @@
   services.gotosocial = {
     enable = true;
     environmentFile = config.sops.templates."gotosocialSecret".path;
-    # Workaround for go 1.25 in unstable not being propagated yet
-    package = pkgs.gotosocial.override {
-      buildGoModule = pkgs.buildGo124Module;
-    };
     setupPostgresqlDB = true;
     settings = {
       application-name = "Erfindergeist Social";
