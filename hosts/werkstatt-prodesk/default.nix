@@ -69,6 +69,7 @@
     hashedPassword = "$6$AE1yIgu1pprXS5jC$0MzA4Qmnuqnz789IhsLw4QEaGc1CXiOp4W3tjpQhbhH96qp7ar8NjVSe22mucZCiAoUT/o4BSU3Zq6r9.l6Z20";
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINLg8qmYBZzk9inPEEAlacDj7v5uUdTEqcs1jc+J1fuJ rothe@lift"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOJK/6c2cKc5d2Enb3lxb9EkSL9UriywovUz6D0Tt3QQ johannes@sage"
     ];
   };
 
