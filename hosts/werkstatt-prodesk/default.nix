@@ -203,8 +203,10 @@
   };
 
   sops.secrets."gotosocial/clientsecret" = {};
+  sops.secrets."gotosocial/smtp_password" = {};
   sops.templates."gotosocialSecret".content = ''
     GTS_OIDC_CLIENT_SECRET=${config.sops.placeholder."gotosocial/clientsecret"}
+    GTS_SMTP_PASSWORD=${config.sops.placeholder."gotosocial/smtp_password"}
   '';
   services.gotosocial = {
     enable = true;
@@ -222,6 +224,10 @@
       oidc-idp-name = "kandidm";
       oidc-issuer = "https://auth.erfindergeist.org/oauth2/openid/gotosocial";
       oidc-client-id = "gotosocial";
+      smtp-host = "smtp.mailgun.org";
+      smtp-port = "587";
+      smtp-username = "admin@sandbox7c3ed0b185814196a7ac73eb40085561.mailgun.org";
+      smtp-from = "admin@social.erfindergeist.org";
     };
   };
 
