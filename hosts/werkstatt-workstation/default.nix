@@ -1,7 +1,14 @@
 { config, lib, pkgs, ... }:
 
 {
-  imports = [ ./hardware-configuration.nix ];
+  imports = [
+    ./hardware-configuration.nix
+    ./llama.nix
+    ./nvidia.nix
+  ];
+
+  # cuda, vscode, etc. need this :/
+  nixpkgs.config.allowUnfree = true;
 
   boot = {
     loader.grub.enable = true;
@@ -29,7 +36,6 @@
     loader.timeout = 1;
   };
 
-
   services = {
     displayManager.gdm.enable = true;
     desktopManager.gnome.enable = true;
@@ -40,6 +46,7 @@
     hostName = "werkstatt-workstation";
     interfaces."enp12s0".wakeOnLan.enable = true;
   };
+
   systemd = {
     network.enable = true;
     targets = {
@@ -66,7 +73,7 @@
   };
 
   system.autoUpgrade = {
-    enable = true;
+    enable = false;
     flake = "github:ErfindergeistJuelichOfficial/nixos-config#${config.networking.hostName}";
     flags = [
       "--no-write-lock-file"
@@ -165,10 +172,6 @@
     vim
   ];
 
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-    "vscode-with-extensions"
-    "vscode"
-  ];
   programs.vscode.enable = true;
 
   virtualisation = {
