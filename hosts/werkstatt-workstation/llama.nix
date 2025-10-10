@@ -1,10 +1,15 @@
 { lib,... }:
 {
-
   services.ollama = {
     enable = true;
     acceleration = "cuda";
     loadModels = ["qwen2.5:3b"];
+  };
+
+  nixpkgs.config.packageOverrides = pkgs: {
+    ollama = pkgs.ollama.override {
+      cudaArches = [ "61" ];
+    };
   };
 
   services.open-webui = {
