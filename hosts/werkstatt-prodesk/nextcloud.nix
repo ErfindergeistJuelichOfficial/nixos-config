@@ -46,11 +46,6 @@
         ];
       };
     };
-
-    #onlyoffice = {
-    #  enable = true;
-    #  hostname = "onlyoffice.example.com";
-    #};
   };
 
 }
