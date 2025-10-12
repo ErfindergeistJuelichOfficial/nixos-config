@@ -82,6 +82,11 @@ in
           reverse_proxy 192.168.100.11:8004
         '';
       };
+      "cloud.erfindergeist.org" = {
+        extraConfig = ''
+          reverse_proxy 192.168.100.11:8005
+        '';
+      };
     };
   };
 
@@ -142,6 +147,7 @@ in
             8002
             8003
             8004
+            8005
           ];
         };
       };
@@ -181,6 +187,12 @@ in
           ":8004" = {
             extraConfig = ''
               reverse_proxy http://werkstatt-prodesk:8080
+            '';
+          };
+          # nextcloud
+          ":8005" = {
+            extraConfig = ''
+              reverse_proxy http://werkstatt-prodesk:80
             '';
           };
         };
