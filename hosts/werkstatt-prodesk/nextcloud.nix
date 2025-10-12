@@ -34,7 +34,7 @@
       extraApps = with config.services.nextcloud.package.packages.apps; {
         # List of apps we want to install and are already packaged in
         # https://github.com/NixOS/nixpkgs/blob/master/pkgs/servers/nextcloud/packages/nextcloud-apps.json
-        inherit groupfolders polls tables user_oidc;  # onlyoffice
+        inherit calendar collectives forms groupfolders polls tables user_oidc;  # onlyoffice
       };
 
       settings = {
