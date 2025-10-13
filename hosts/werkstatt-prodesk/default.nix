@@ -20,6 +20,17 @@
   '';
   systemd.services."systemd-networkd-wait-online".enable = lib.mkForce false;
 
+  fileSystems."/mnt/backup" = {
+    device = "ssh-w01da789@w01da789.kasserver.com:/www/htdocs/w01da789/backup";
+    fsType = "sshfs";
+    options = [
+      "_netdev"
+      "x-systemd.automount"
+      "reconnect"
+      "ServerAliveInterval=15"
+    ];
+  };
+
   systemd.network.networks."10-lan" = {
     matchConfig.Name = "enp1s0";
     networkConfig.DHCP = "ipv4";
