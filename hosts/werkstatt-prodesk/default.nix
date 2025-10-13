@@ -108,19 +108,6 @@
     };
   };
 
-  services.caddy = {
-    enable = true;
-    virtualHosts = {
-      ":8123" = {
-        extraConfig = ''
-          reverse_proxy 10.147.121.6:8123 {
-            header_up Host {upstream_hostport}
-          }
-        '';
-      };
-    };
-  };
-
   services.apcupsd.enable = true;
 
   services.kanidm = {
