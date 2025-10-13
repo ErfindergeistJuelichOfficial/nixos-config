@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./backup.nix
     ./hardware-configuration.nix
     ./nextcloud.nix
   ];
