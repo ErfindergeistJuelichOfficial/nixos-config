@@ -17,10 +17,14 @@
       # After a new installation
       #  * Run `nix run nixpkgs#borgmatic -- init --encryption repokey-blake2` to initialize the repos
       #  * Generate and add ssh key to all-inkl
+      # TODO gotosocial https://docs.gotosocial.org/en/latest/admin/backup_and_restore/
       configurations = {
         files = lib.recursiveUpdate commonSettings {
           source_directories = [
             "/mnt/data/nextcloud"
+            "/var/lib/vikunja"
+            config.services.kanidm.serverSettings.online_backup.path
+            config.services.outline.storage.localRootDir
           ];
           repositories = [
             {
@@ -36,6 +40,10 @@
             {
               name = "nextcloud";
               username = "nextcloud";
+            }
+            {
+              name = "outline";
+              username = "outline";
             }
           ];
           repositories = [
