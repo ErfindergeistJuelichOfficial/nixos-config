@@ -57,11 +57,6 @@ in
           reverse_proxy localhost:${builtins.toString config.services.headscale.port}
         '';
       };
-      "n8n.erfindergeist.org" = {
-        extraConfig = ''
-          reverse_proxy 192.168.100.11:8000
-        '';
-      };
       "auth.erfindergeist.org" = {
         extraConfig = ''
           reverse_proxy 192.168.100.11:8001
@@ -85,6 +80,12 @@ in
       "cloud.erfindergeist.org" = {
         extraConfig = ''
           reverse_proxy 192.168.100.11:8005
+        '';
+      };
+      "endof10.erfindergeist.org" = {
+        extraConfig = ''
+          root * /var/www/html/endof10/
+          file_server
         '';
       };
     };
