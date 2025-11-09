@@ -9,7 +9,7 @@
       enable = true;
 
       # Need to manually increment with every major upgrade.
-      package = pkgs.nextcloud31;
+      package = pkgs.nextcloud32;
 
 
       config = {
