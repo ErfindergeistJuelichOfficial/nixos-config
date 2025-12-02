@@ -41,7 +41,6 @@
     desktopManager.gnome.enable = true;
   };
 
-
   networking = {
     hostName = "werkstatt-workstation";
     interfaces."enp12s0".wakeOnLan.enable = true;
@@ -104,6 +103,14 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
+  };
+
+  services.printing.enable = true;
+
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
   };
 
   documentation = {
