@@ -13,7 +13,6 @@
 
 
       config = {
-        overwriteProtocol = "https";
         dbtype = "pgsql";
         adminuser = "verein";
         adminpassFile = config.sops.templates."adminPassFile".path;
@@ -38,6 +37,7 @@
       };
 
       settings = {
+        overwriteprotocol = "https";
         trusted_domains = [
           hostname
         ];
