@@ -113,7 +113,7 @@
   services.kanidm = {
     #enableClient = true;
     enableServer = true;
-    package = pkgs.kanidm_1_7;
+    package = pkgs.kanidm_1_8;
     #clientSettings.uri = "https://127.0.0.1:8444";
     serverSettings = {
       domain = "auth.erfindergeist.org";
