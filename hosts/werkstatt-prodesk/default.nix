@@ -4,6 +4,7 @@
   imports = [
     ./backup.nix
     ./hardware-configuration.nix
+    ./listmonk.nix
     ./nextcloud.nix
   ];
 
