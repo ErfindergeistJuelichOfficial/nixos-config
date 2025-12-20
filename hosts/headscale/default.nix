@@ -206,6 +206,9 @@ in
           ":8006" = {
             extraConfig = ''
               reverse_proxy http://werkstatt-prodesk:9900
+              header {
+                Access-Control-Allow-Origin "https://spielwiese.erfindergeist.org"
+              }
             '';
           };
         };
