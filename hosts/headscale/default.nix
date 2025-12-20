@@ -82,6 +82,11 @@ in
           reverse_proxy 192.168.100.11:8005
         '';
       };
+      "listmonk.erfindergeist.org" = {
+        extraConfig = ''
+          reverse_proxy 192.168.100.11:8006
+        '';
+      };
       "endof10.erfindergeist.org" = {
         extraConfig = ''
           root * /var/www/html/endof10/
@@ -149,6 +154,7 @@ in
             8003
             8004
             8005
+            8006
           ];
         };
       };
@@ -194,6 +200,12 @@ in
           ":8005" = {
             extraConfig = ''
               reverse_proxy http://werkstatt-prodesk:80
+            '';
+          };
+          # listmonk
+          ":8006" = {
+            extraConfig = ''
+              reverse_proxy http://werkstatt-prodesk:9900
             '';
           };
         };
