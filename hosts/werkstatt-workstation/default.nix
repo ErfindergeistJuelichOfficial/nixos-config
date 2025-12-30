@@ -96,8 +96,9 @@
 
   time.timeZone = "Europe/Berlin";
 
-  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.defaultLocale = "de_DE.UTF-8";
   console.keyMap = "de";
+  services.xserver.xkb.layout = "de";
 
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
@@ -144,15 +145,16 @@
 
   services.tailscale.enable = true;
 
-  #services.kanidm = {
-  #  package = pkgs.kanidm_1_7;
-  #  enableClient = true;
-  #  clientSettings.uri = "https://auth.erfindergeist.org";
-  #  enablePam = true;
-  #  unixSettings = {
-  #    pam_allowed_login_groups = [ config.networking.hostName ];
-  #  };
-  #};
+  services.kanidm = {
+    package = pkgs.kanidm_1_9;
+    enableClient = true;
+    clientSettings.uri = "https://auth.erfindergeist.org";
+    enablePam = true;
+    unixSettings = {
+      default_shell = "${pkgs.bashInteractive}/bin/bash";
+      kanidm.pam_allowed_login_groups = [ config.networking.hostName ];
+    };
+  };
 
   # Remote desktop
   services = {
