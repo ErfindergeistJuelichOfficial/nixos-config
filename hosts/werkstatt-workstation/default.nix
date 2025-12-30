@@ -144,15 +144,16 @@
 
   services.tailscale.enable = true;
 
-  #services.kanidm = {
-  #  package = pkgs.kanidm_1_7;
-  #  enableClient = true;
-  #  clientSettings.uri = "https://auth.erfindergeist.org";
-  #  enablePam = true;
-  #  unixSettings = {
-  #    pam_allowed_login_groups = [ config.networking.hostName ];
-  #  };
-  #};
+  services.kanidm = {
+    package = pkgs.kanidm_1_8;
+    enableClient = true;
+    clientSettings.uri = "https://auth.erfindergeist.org";
+    enablePam = true;
+    unixSettings = {
+      default_shell = "${pkgs.bashInteractive}/bin/bash";
+      pam_allowed_login_groups = [ config.networking.hostName ];
+    };
+  };
 
   # Remote desktop
   services = {
