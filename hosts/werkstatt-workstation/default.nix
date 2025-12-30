@@ -43,7 +43,7 @@
 
   networking = {
     hostName = "werkstatt-workstation";
-    interfaces."enp12s0".wakeOnLan.enable = true;
+    interfaces."eno1".wakeOnLan.enable = true;
   };
 
   systemd = {
@@ -63,7 +63,7 @@
   systemd.services."systemd-networkd-wait-online".enable = lib.mkForce false;
 
   systemd.network.networks."10-lan" = {
-    matchConfig.Name = "enp1s0";
+    matchConfig.Name = "eno1";
     networkConfig.DHCP = "ipv4";
     dhcpV4Config.UseDomains = true;
     networkConfig = {
