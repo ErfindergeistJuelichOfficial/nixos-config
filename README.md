@@ -1,5 +1,7 @@
 # Erfindergeist NixOS Configuration
 
+[![CI](https://github.com/ErfindergeistJuelichOfficial/nixos-config/actions/workflows/ci.yml/badge.svg)](https://github.com/ErfindergeistJuelichOfficial/nixos-config/actions/workflows/ci.yml)
+
 NixOS configurations for Erfindergeist Jülich infrastructure.
 
 ## Infrastructure Overview
