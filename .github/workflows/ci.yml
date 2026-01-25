@@ -1,0 +1,70 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  # Allow manual triggering
+  workflow_dispatch:
+
+jobs:
+  # Stage 1: Fast validation (no cache needed)
+  check:
+    name: Flake Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v27
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+
+      - name: Check flake
+        run: nix flake check --all-systems
+
+      - name: Check flake metadata
+        run: nix flake metadata
+
+  # Stage 2: Build configurations (uses cache)
+  build:
+    name: Build configurations
+    runs-on: ubuntu-latest
+    needs: check
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v27
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+
+      - name: Setup Cachix
+        uses: cachix/cachix-action@v15
+        with:
+          name: erfindergeist
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+
+      - name: Build headscale configuration
+        run: |
+          nix build .#nixosConfigurations.headscale.config.system.build.toplevel \
+            --print-build-logs \
+            --fallback
+
+      - name: Build werkstatt-prodesk configuration
+        run: |
+          nix build .#nixosConfigurations.werkstatt-prodesk.config.system.build.toplevel \
+            --print-build-logs \
+            --fallback
+
+  # Note: werkstatt-workstation is NOT built in CI due to:
+  # - Heavy CUDA/Ollama dependencies (slow, large)
+  # - Rarely changes
+  # - Manual deployments preferred
