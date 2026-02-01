@@ -16,6 +16,7 @@
         modules = [
           disko.nixosModules.disko
           sops-nix.nixosModules.sops
+          ./modules
           ./hosts/headscale
         ];
       };
@@ -23,12 +24,14 @@
         system = "x86_64-linux";
         modules = [
           sops-nix.nixosModules.sops
+          ./modules
           ./hosts/werkstatt-prodesk
         ];
       };
       werkstatt-workstation = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
+          ./modules
           ./hosts/werkstatt-workstation
         ];
       };
