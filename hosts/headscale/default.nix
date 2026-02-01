@@ -21,6 +21,8 @@ in
     efiInstallAsRemovable = true;
   };
 
+  erfindergeist.services.cache.enable = true;
+
   documentation = {
     man.enable = false;
     nixos.enable = false;
