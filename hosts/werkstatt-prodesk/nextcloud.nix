@@ -33,16 +33,22 @@
       extraApps = with config.services.nextcloud.package.packages.apps; {
         # List of apps we want to install and are already packaged in
         # https://github.com/NixOS/nixpkgs/blob/master/pkgs/servers/nextcloud/packages/nextcloud-apps.json
-        inherit calendar forms groupfolders polls user_oidc;  # onlyoffice
+        inherit calendar forms groupfolders polls user_oidc;
+        passwords = pkgs.fetchNextcloudApp {
+          url = "https://git.mdns.eu/api/v4/projects/45/packages/generic/passwords/2026.3.0/passwords.tar.gz";
+          sha256 = "sha256-YHilpFaZHNCtqLRvTCDhyVoFWLC85Qkj1mMxp08YCho=";
+          license = "agpl3Only";
+        };
       };
 
       settings = {
-        overwriteprotocol = "https";
+        "overwriteprotocol" = "https";
+        "overwrite.cli.url" = "https://cloud.erfindergeist.org";
         trusted_domains = [
           hostname
         ];
         trusted_proxies = [
-          "100.64.0.14"
+          "100.64.0.0/10"
         ];
       };
     };
