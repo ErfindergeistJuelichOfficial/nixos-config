@@ -142,11 +142,12 @@
       openid:
         enabled: true
         providers:
-        - authurl: https://auth.erfindergeist.org/oauth2/openid/vikunja
-          clientid: vikunja
-          clientsecret: ${config.sops.placeholder."vikunja/clientsecret"}
-          name: kandidm
-          scope: openid profile email
+          kandidm:
+            authurl: https://auth.erfindergeist.org/oauth2/openid/vikunja
+            clientid: vikunja
+            clientsecret: ${config.sops.placeholder."vikunja/clientsecret"}
+            name: kandidm
+            scope: openid profile email
     database:
       database: vikunja
       host: localhost
