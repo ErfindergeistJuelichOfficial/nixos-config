@@ -157,6 +157,7 @@
       basepath: /var/lib/vikunja/files
     service:
       frontendurl: https://tasks.erfindergeist.org/
+      publicurl: https://tasks.erfindergeist.org/
       interface: :3456
   '';
   users.users.vikunja = {
