@@ -29,6 +29,11 @@ in
     dev.enable = false;
   };
 
+  users.mutableUsers = false;
+  users.users.root = {
+    hashedPassword = "$y$j9T$7dv8qVL38F7IH4/EC1kFm.$GgcMyys4dUV9oBlODIgxgAT2c7RO/1/ib3QTVoCTeC4";
+  };
+
   system.autoUpgrade = {
     enable = true;
     flake = "github:ErfindergeistJuelichOfficial/nixos-config#headscale";
