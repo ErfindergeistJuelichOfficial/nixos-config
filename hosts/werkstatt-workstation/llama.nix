@@ -1,8 +1,8 @@
-{ ... }:
+{ pkgs, ... }:
 {
   services.ollama = {
     enable = true;
-    acceleration = "cuda";
+    package = pkgs.ollama-cuda;
     loadModels = ["gemma3:12b" "qwen2.5-coder:14b"];
   };
 

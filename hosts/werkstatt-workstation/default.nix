@@ -43,7 +43,7 @@
 
   networking = {
     hostName = "werkstatt-workstation";
-    interfaces."eno1".wakeOnLan.enable = true;
+    interfaces."enp3s0".wakeOnLan.enable = true;
   };
 
   systemd = {
@@ -57,9 +57,9 @@
   };
 
   services.resolved.enable = true;
-  services.resolved.extraConfig = ''
-    MulticastDNS=resolve;
-  '';
+  services.resolved.settings.Resolve = {
+    MulticastDNS = true;
+  };
   systemd.services."systemd-networkd-wait-online".enable = lib.mkForce false;
 
   systemd.network.networks."10-lan" = {
@@ -156,10 +156,6 @@
 
   # Remote desktop
   services = {
-    xrdp = {
-      enable = true;
-      defaultWindowManager = "${pkgs.gnome-session}/bin/gnome-session";
-    };
     gnome.gnome-remote-desktop.enable = true;
   };
 
