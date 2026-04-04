@@ -3,13 +3,14 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, disko, sops-nix }: {
+  outputs = { self, nixpkgs, nixpkgs-unstable, disko, sops-nix }: {
     nixosConfigurations = {
       headscale = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -28,7 +29,7 @@
           ./hosts/werkstatt-prodesk
         ];
       };
-      werkstatt-workstation = nixpkgs.lib.nixosSystem {
+      werkstatt-workstation = nixpkgs-unstable.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           ./modules
