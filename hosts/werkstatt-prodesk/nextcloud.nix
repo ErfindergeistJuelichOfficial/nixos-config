@@ -46,6 +46,10 @@
         ];
       };
     };
+
+    services.nginx.virtualHosts.${hostname}.locations."~ ^/(.+/)?(composer\\.(json|lock)|package(-lock)?\\.json)$" = {
+      return = "404";
+    };
   };
 
 }
