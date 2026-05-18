@@ -200,7 +200,7 @@ in
           # gotosocial
           ":8004" = {
             extraConfig = ''
-              reverse_proxy http://werkstatt-prodesk:8080
+              reverse_proxy http://werkstatt-prodesk:8085
             '';
           };
           # nextcloud

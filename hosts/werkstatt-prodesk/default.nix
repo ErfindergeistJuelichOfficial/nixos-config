@@ -222,7 +222,7 @@
     settings = {
       application-name = "Erfindergeist Social";
       host = "social.erfindergeist.org";
-      port = 8080;
+      port = 8085;
       bind-address = "0.0.0.0";
       trusted-proxies = [
         "100.64.0.0/24"
