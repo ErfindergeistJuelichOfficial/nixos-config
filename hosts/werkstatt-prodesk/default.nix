@@ -6,6 +6,7 @@
     ./hardware-configuration.nix
     ./listmonk.nix
     ./nextcloud.nix
+    ./unifi.nix
   ];
 
   boot.loader.systemd-boot.enable = true;
