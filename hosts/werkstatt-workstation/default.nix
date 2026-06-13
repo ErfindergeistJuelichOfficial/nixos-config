@@ -175,6 +175,7 @@
     libreoffice
     neovim
     orca-slicer
+    podman-compose
     prusa-slicer
     totem
     vim

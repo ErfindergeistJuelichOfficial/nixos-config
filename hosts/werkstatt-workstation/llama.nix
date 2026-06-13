@@ -2,14 +2,14 @@
 {
   services.ollama = {
     enable = true;
-    package = pkgs.ollama-cuda;
-    loadModels = ["gemma3:12b" "qwen2.5-coder:14b"];
-  };
-
-  nixpkgs.config.packageOverrides = pkgs: {
-    ollama = pkgs.ollama.override {
+    package = pkgs.ollama-cuda.override {
       cudaArches = [ "61" ];
     };
+    loadModels = [
+      "gemma4:12b"
+      "qwen3.5:4b"
+      "qwen3.5:9b"
+    ];
   };
 
   services.open-webui = {
