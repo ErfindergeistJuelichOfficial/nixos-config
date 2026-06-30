@@ -19,9 +19,9 @@
   networking.hostName = "werkstatt-prodesk";
   systemd.network.enable = true;
   services.resolved.enable = true;
-  services.resolved.extraConfig = ''
-    MulticastDNS=resolve;
-  '';
+  services.resolved.settings.Resolve = {
+    MulticastDNS = "resolve";
+  };
   systemd.services."systemd-networkd-wait-online".enable = lib.mkForce false;
 
   fileSystems."/mnt/backup" = {
@@ -114,11 +114,9 @@
   services.apcupsd.enable = true;
 
   services.kanidm = {
-    #enableClient = true;
-    enableServer = true;
-    package = pkgs.kanidm_1_9;
-    #clientSettings.uri = "https://127.0.0.1:8444";
-    serverSettings = {
+    server.enable = true;
+    package = pkgs.kanidm_1_10;
+    server.settings = {
       domain = "auth.erfindergeist.org";
       origin = "https://auth.erfindergeist.org";
       bindaddress = "0.0.0.0:8444";
@@ -185,9 +183,15 @@
     restartUnits = [ "outline.service" ];
     owner = config.services.outline.user;
   };
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) ["outline"];
+  nixpkgs.config = {
+    allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) ["outline"];
+    permittedInsecurePackages = [
+      "pnpm-10.29.2" # Dependency of vikunja
+    ];
+  };
+
   services.outline = let
-    authUrl = config.services.kanidm.serverSettings.origin;
+    authUrl = config.services.kanidm.server.settings.origin;
   in {
     enable = true;
     defaultLanguage = "de_DE";

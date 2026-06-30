@@ -146,11 +146,11 @@
   services.tailscale.enable = true;
 
   services.kanidm = {
-    package = pkgs.kanidm_1_9;
-    enableClient = true;
-    clientSettings.uri = "https://auth.erfindergeist.org";
-    enablePam = true;
-    unixSettings = {
+    package = pkgs.kanidm_1_10;
+    client.enable = true;
+    client.settings.uri = "https://auth.erfindergeist.org";
+    unix.enable = true;
+    unix.settings = {
       default_shell = "${pkgs.bashInteractive}/bin/bash";
       kanidm.pam_allowed_login_groups = [ config.networking.hostName ];
     };

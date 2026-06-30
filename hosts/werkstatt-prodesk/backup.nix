@@ -23,7 +23,7 @@
           source_directories = [
             "/mnt/data/nextcloud"
             "/var/lib/vikunja"
-            config.services.kanidm.serverSettings.online_backup.path
+            config.services.kanidm.server.settings.online_backup.path
             config.services.outline.storage.localRootDir
           ];
           repositories = [
