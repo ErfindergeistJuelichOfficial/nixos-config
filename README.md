@@ -11,6 +11,7 @@ NixOS configurations for Erfindergeist Jülich infrastructure.
 | **headscale** | VPS | VPN coordinator & reverse proxy | Headscale, Caddy, Fail2ban |
 | **werkstatt-prodesk** | On-prem server | Self-hosted services | Nextcloud, Kanidm, Vikunja, Outline, GoToSocial, Listmonk |
 | **werkstatt-workstation** | Desktop | Workstation with AI tools | GNOME, Ollama, Open WebUI, Remote Desktop |
+| **vikunja-kiosk** | Raspberry Pi 3B | Always-on Vikunja dashboard kiosk | Cage, Chromium, read-only SD |
 
 ### Network Architecture
 
@@ -20,6 +21,8 @@ NixOS configurations for Erfindergeist Jülich infrastructure.
 
 ```
 Internet → headscale (VPS) → Tailscale → werkstatt-prodesk (services)
+
+LAN → vikunja-kiosk (Pi 3B, read-only, always-on)
 ```
 
 ## Prerequisites
@@ -135,6 +138,31 @@ nix.gc = {
   options = "--delete-older-than 30d";
 };
 ```
+
+## Vikunja Kiosk (Raspberry Pi 3B)
+
+A read-only appliance that boots directly into a fullscreen Chromium showing the Vikunja dashboard. The SD card is never written to during normal operation — the root filesystem is a tmpfs, `/nix` is mounted read-only, and hard power-off is always safe.
+
+### Build and flash
+
+Building requires a host with `aarch64-linux` binfmt emulation enabled. On NixOS, add this once and rebuild:
+
+```nix
+boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+```
+
+Most packages will be fetched from `cache.nixos.org` (binary cache covers aarch64-linux natively). QEMU is only used for the rare package not in the cache.
+
+Before building, set the WiFi SSID in `hosts/kiosk/configuration.nix` (search for `CHANGE_ME_SSID`).
+
+```bash
+# Build the SD image
+nix build .#packages.aarch64-linux.vikunja-kiosk
+
+# Flash to SD card (replace /dev/sdX with your card) — image is zstd-compressed
+zstdcat result/sd-image/*.img.zst | dd of=/dev/sdX bs=4M status=progress conv=fsync
+```
+
 
 ## Backups
 

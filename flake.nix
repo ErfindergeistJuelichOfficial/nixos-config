@@ -8,9 +8,10 @@
     disko.inputs.nixpkgs.follows = "nixpkgs";
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, disko, sops-nix }: {
+  outputs = { self, nixpkgs, nixpkgs-unstable, disko, sops-nix, nixos-hardware }: {
     nixosConfigurations = {
       headscale = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -36,10 +37,18 @@
           ./hosts/werkstatt-workstation
         ];
       };
+      vikunja-kiosk = nixpkgs.lib.nixosSystem {
+        system = "aarch64-linux";
+        modules = [
+          nixos-hardware.nixosModules.raspberry-pi-3
+          ./hosts/kiosk
+        ];
+      };
     };
 
     packages.x86_64-linux.default = self.nixosConfigurations.headscale.config.system.build.vm;
     packages.x86_64-linux.werkstatt-prodesk = self.nixosConfigurations.werkstatt-prodesk.config.system.build.vm;
     packages.x86_64-linux.werkstatt-workstation = self.nixosConfigurations.werkstatt-workstation.config.system.build.vm;
+    packages.aarch64-linux.vikunja-kiosk = self.nixosConfigurations.vikunja-kiosk.config.system.build.sdImage;
   };
 }
