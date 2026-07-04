@@ -76,7 +76,9 @@ in
       };
       "docs.erfindergeist.org" = {
         extraConfig = ''
-          reverse_proxy 192.168.100.11:8003
+          reverse_proxy 192.168.100.11:8003 {
+            header_up X-Forwarded-Proto https
+          }
         '';
       };
       "social.erfindergeist.org" = {
@@ -194,7 +196,9 @@ in
           # outline
           ":8003" = {
             extraConfig = ''
-              reverse_proxy http://werkstatt-prodesk:3000
+              reverse_proxy http://werkstatt-prodesk:3000 {
+                header_up X-Forwarded-Proto https
+              }
             '';
           };
           # gotosocial
