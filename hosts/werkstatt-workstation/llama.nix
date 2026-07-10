@@ -3,7 +3,7 @@
   services.ollama = {
     enable = true;
     package = pkgs.ollama-cuda.override {
-      cudaArches = [ "61" ];
+      cudaArches = [ "120" ];
     };
     loadModels = [
       "gemma4:12b"
