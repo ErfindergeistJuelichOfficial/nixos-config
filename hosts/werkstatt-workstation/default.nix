@@ -143,6 +143,9 @@
     hashedPassword = "$y$j9T$dO7c2cphx1q5oDw.bIcLP1$kcon910nDQMQWjcPT3tFPgmPIsmlT6HrqSde8S71UG6";
   };
 
+  sops.defaultSopsFile = ./secrets.yaml;
+  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+
   services.tailscale.enable = true;
 
   services.kanidm = {
