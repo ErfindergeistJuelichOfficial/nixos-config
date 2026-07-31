@@ -11,3 +11,8 @@ creation_rules:
       - age:
         - *admin
         - age1klzgkrj7ra3h5lwdpay3kdpcgz0dl6jm7wc2fswy5grhra6r944s2atk04
+  - path_regex: hosts/werkstatt-workstation/secrets.yaml
+    key_groups:
+      - age:
+        - *admin
+        - age1wrjv3d08vyzhdv28vualtm6cwftlq9rcsdmqjf2k626h9jjrwemqe2tha3
