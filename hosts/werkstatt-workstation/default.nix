@@ -144,7 +144,20 @@
     hashedPassword = "$y$j9T$dO7c2cphx1q5oDw.bIcLP1$kcon910nDQMQWjcPT3tFPgmPIsmlT6HrqSde8S71UG6";
   };
 
+  sops.defaultSopsFile = ./secrets.yaml;
+  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+
   services.tailscale.enable = true;
+
+  services.openssh = {
+    enable = true;
+    ports = [ 22 ];
+    settings = {
+      PasswordAuthentication = false;
+      X11Forwarding = false;
+      PermitRootLogin = "prohibit-password";
+    };
+  };
 
   services.kanidm = {
     package = pkgs.kanidm_1_10;

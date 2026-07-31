@@ -32,6 +32,7 @@
       werkstatt-workstation = nixpkgs-unstable.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
+          sops-nix.nixosModules.sops
           ./modules
           ./hosts/werkstatt-workstation
         ];

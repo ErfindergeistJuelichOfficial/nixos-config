@@ -96,6 +96,13 @@ in
           reverse_proxy 192.168.100.11:8006
         '';
       };
+      "openwebui.erfindergeist.org" = {
+        extraConfig = ''
+          reverse_proxy 192.168.100.11:8007 {
+            header_up X-Forwarded-Proto https
+          }
+        '';
+      };
       "endof10.erfindergeist.org" = {
         extraConfig = ''
           root * /var/www/html/endof10/
@@ -164,6 +171,7 @@ in
             8004
             8005
             8006
+            8007
           ];
         };
       };
@@ -219,6 +227,14 @@ in
               reverse_proxy http://werkstatt-prodesk:9900
               header {
                 Access-Control-Allow-Origin "https://spielwiese.erfindergeist.org"
+              }
+            '';
+          };
+          # open-webui
+          ":8007" = {
+            extraConfig = ''
+              reverse_proxy http://werkstatt-workstation:8080 {
+                header_up X-Forwarded-Proto https
               }
             '';
           };
