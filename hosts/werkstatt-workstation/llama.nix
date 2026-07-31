@@ -2,6 +2,8 @@
 {
   services.ollama = {
     enable = true;
+    openFirewall = true;
+    host = "0.0.0.0";
     package = pkgs.ollama-cuda.override {
       cudaArches = [ "120" ];
     };
