@@ -4,6 +4,7 @@
   imports = [
     ./hardware-configuration.nix
     ./llama.nix
+    ./comfyui.nix
     ./nvidia.nix
   ];
 
