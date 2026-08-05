@@ -9,4 +9,6 @@
     open = true;
     nvidiaSettings = true;
   };
+
+  hardware.nvidia-container-toolkit.enable = true;
 }
