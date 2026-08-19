@@ -22,7 +22,6 @@
   services.resolved.settings.Resolve = {
     MulticastDNS = "resolve";
   };
-  systemd.services."systemd-networkd-wait-online".enable = lib.mkForce false;
 
   fileSystems."/mnt/backup" = {
     device = "ssh-w01da789@w01da789.kasserver.com:/www/htdocs/w01da789/backup";
@@ -36,7 +35,7 @@
   };
 
   systemd.network.networks."10-lan" = {
-    matchConfig.Name = "enp1s0";
+    matchConfig.Name = "en*";
     networkConfig.DHCP = "ipv4";
     dhcpV4Config.UseDomains = true;
     networkConfig = {
