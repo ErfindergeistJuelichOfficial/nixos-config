@@ -114,7 +114,7 @@
 
   services.kanidm = {
     server.enable = true;
-    package = pkgs.kanidm_1_10;
+    package = pkgs.kanidm_1_11;
     server.settings = {
       domain = "auth.erfindergeist.org";
       origin = "https://auth.erfindergeist.org";
