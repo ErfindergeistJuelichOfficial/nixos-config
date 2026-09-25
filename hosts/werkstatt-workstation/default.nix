@@ -160,7 +160,7 @@
   };
 
   services.kanidm = {
-    package = pkgs.kanidm_1_10;
+    package = pkgs.kanidm_1_11;
     client.enable = true;
     client.settings.uri = "https://auth.erfindergeist.org";
     unix.enable = true;
