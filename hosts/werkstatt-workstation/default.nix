@@ -3,6 +3,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ./blender.nix
     ./llama.nix
     ./comfyui.nix
     ./nvidia.nix
