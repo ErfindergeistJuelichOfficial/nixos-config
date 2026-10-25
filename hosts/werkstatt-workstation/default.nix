@@ -194,9 +194,10 @@
     prusa-slicer
     totem
     vim
+    # Not programs.vscode: it always pins --extensions-dir to the read-only store,
+    # so users could not install extensions themselves.
+    vscode
   ];
-
-  programs.vscode.enable = true;
 
   virtualisation = {
     containers.enable = true;

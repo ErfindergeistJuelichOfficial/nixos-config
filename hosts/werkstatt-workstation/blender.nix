@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 let
   src = pkgs.fetchFromGitHub {
     owner = "ahujasid";
@@ -52,6 +52,13 @@ let
 
   opencodeConfig = pkgs.writeText "opencode.json" (builtins.toJSON {
     "$schema" = "https://opencode.ai/config.json";
+    model = "ollama/qwen3.5:9b";
+    provider.ollama = {
+      npm = "@ai-sdk/openai-compatible";
+      name = "Ollama (lokal)";
+      options.baseURL = "http://127.0.0.1:${toString config.services.ollama.port}/v1";
+      models = lib.genAttrs config.services.ollama.loadModels (name: { inherit name; });
+    };
     mcp.blender = {
       type = "local";
       command = [ "${mcp-for-blender}/bin/mcp-for-blender" ];
@@ -66,7 +73,9 @@ in
     mcp-for-blender
   ];
 
-  environment.variables.OPENCODE_CONFIG = "${opencodeConfig}";
+  # Stable path, so running sessions pick up config changes without re-login.
+  environment.etc."opencode/opencode.json".source = opencodeConfig;
+  environment.variables.OPENCODE_CONFIG = "/etc/opencode/opencode.json";
 
   systemd.user.tmpfiles.rules = [
     "d %h/${blenderDir}/scripts/addons 0755 - - - -"

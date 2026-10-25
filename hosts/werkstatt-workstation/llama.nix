@@ -10,10 +10,13 @@ in
     package = pkgs.ollama-cuda.override {
       cudaArches = [ "120" ];
     };
+    # Default is 4096, too small for opencode's system prompt and tool definitions.
+    environmentVariables.OLLAMA_CONTEXT_LENGTH = "32768";
     loadModels = [
       "gemma4:12b"
       "qwen3.5:4b"
       "qwen3.5:9b"
+      "qwen2.5-coder:14b"
     ];
   };
 
