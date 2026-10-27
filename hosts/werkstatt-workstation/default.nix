@@ -14,7 +14,8 @@
 
   boot = {
     loader.grub.enable = true;
-    loader.grub.device = "/dev/sda";
+    # By id, not /dev/sdX: with a second disk the sdX names can swap.
+    loader.grub.device = "/dev/disk/by-id/ata-Samsung_SSD_840_PRO_Series_S1ATNSAD703635R";
 
     plymouth = {
       enable = true;
