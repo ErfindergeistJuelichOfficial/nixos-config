@@ -6,6 +6,7 @@
     ./blender.nix
     ./llama.nix
     ./comfyui.nix
+    ./storage.nix
     ./nvidia.nix
   ];
 

@@ -11,13 +11,6 @@ in
     virtualisation.oci-containers.containers.comfyui.autoStart = lib.mkVMOverride false;
   };
 
-  # Models live on the second SSD (Intenso 120 GB).
-  fileSystems.${dataDir} = {
-    device = "/dev/disk/by-uuid/2561817c-4e7d-4140-9693-92acda04f173";
-    fsType = "ext4";
-    options = [ "nofail" ];
-  };
-
   systemd.tmpfiles.rules = [
     "d ${dataDir} 0750 root root - -"
   ];
