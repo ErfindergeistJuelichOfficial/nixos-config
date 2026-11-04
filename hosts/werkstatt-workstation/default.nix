@@ -6,6 +6,7 @@
     ./blender.nix
     ./llama.nix
     ./comfyui.nix
+    ./storage.nix
     ./nvidia.nix
   ];
 
@@ -137,7 +138,8 @@
     isNormalUser = true;
     group = "erfindergeist";
     description = "Erfindergeist";
-    extraGroups = [ "networkmanager" "wheel" "podman" ];
+    # dialout: access to USB serial devices (Arduino, ESP32, Pico)
+    extraGroups = [ "networkmanager" "wheel" "podman" "dialout" ];
     hashedPassword = "$y$j9T$dO7c2cphx1q5oDw.bIcLP1$kcon910nDQMQWjcPT3tFPgmPIsmlT6HrqSde8S71UG6";
   };
   users.groups.erfindergeist = {};
@@ -178,21 +180,33 @@
   };
 
   environment.systemPackages = with pkgs; [
+    arduino-ide
     bash
     curl
     eog
     evince
     firefox
+    freecad
+    fritzing
     gedit
     gimp
     git
     htop
     inkscape
+    kicad
     libreoffice
+    meshlab
+    ncdu
     neovim
+    nvtopPackages.nvidia
+    # openscad itself is still the 2021.01 release; unstable has the much faster Manifold backend.
+    openscad-unstable
     orca-slicer
     podman-compose
     prusa-slicer
+    rpi-imager
+    smartmontools
+    thonny
     totem
     vim
     # Not programs.vscode: it always pins --extensions-dir to the read-only store,
