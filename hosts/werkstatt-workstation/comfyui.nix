@@ -1,6 +1,6 @@
 { lib, ... }:
 let
-  dataDir = "/var/lib/comfyui";
+  dataDir = "/data/comfyui";
   port = 8188;
 in
 {

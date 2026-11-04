@@ -10,14 +10,6 @@ in
     options = [ "nofail" ];
   };
 
-  # Bind the subdirectories to where the services expect their state.
-  fileSystems."/var/lib/comfyui" = {
-    device = "${dataDir}/comfyui";
-    fsType = "none";
-    options = [ "bind" "nofail" ];
-    depends = [ dataDir ];
-  };
-
   # ollama uses DynamicUser, so its state lives in /var/lib/private/ollama.
   fileSystems."/var/lib/private/ollama" = {
     device = "${dataDir}/ollama";
