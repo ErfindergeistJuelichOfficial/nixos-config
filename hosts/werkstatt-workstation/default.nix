@@ -28,7 +28,6 @@
       ];
     };
     consoleLogLevel = 3;
-    initrd.verbose = false;
     kernelParams = [
       "quiet"
       "splash"
@@ -162,7 +161,7 @@
   };
 
   services.kanidm = {
-    package = pkgs.kanidm_1_11;
+    package = pkgs.kanidm_1_12;
     client.enable = true;
     client.settings.uri = "https://auth.erfindergeist.org";
     unix.enable = true;
